@@ -22,6 +22,7 @@ public class PaymentController {
         return paymentService.processPayment(paymentRequestDTO);
     }
 
+    // Kasadaki tüm ödeme geçmişini listeleyen profesyonel GET kapısı
     @GetMapping
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();

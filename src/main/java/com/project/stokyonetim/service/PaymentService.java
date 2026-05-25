@@ -6,6 +6,7 @@ import com.project.stokyonetim.entity.Payment;
 import com.project.stokyonetim.repository.CustomerRepository;
 import com.project.stokyonetim.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional; // Guvenli veri tabani islemleri icin sart!
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,17 +21,19 @@ public class PaymentService {
         this.customerRepository = customerRepository;
     }
 
-    // Postman'den gelen DTO'yu alip veri tabanina gerçek bir odeme kaydi olarak atan akilli metot
+    // Postman'den gelen DTO'yu alip veri tabanina gercek bir odeme kaydi olarak atan akilli metot
+    @Transactional // @Transactional zimbasini ekledik, kasa islemleri guvende!
     public Payment processPayment(PaymentRequestDTO requestDTO) {
         // Postman'den gelen ID ile veri tabaninda oyle bir musteri var mi diye bakiyoruz, yoksa hata donuyoruz
         Customer customer = customerRepository.findById(requestDTO.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Musteri bulunamadi!"));
+                .orElseThrow(() -> new RuntimeException("Musteri bulunamadi! ID: " + requestDTO.getCustomerId()));
 
         Payment payment = new Payment();
         payment.setCustomer(customer);
         payment.setAmount(requestDTO.getAmount());
         payment.setPaymentMethod(requestDTO.getPaymentMethod());
-        // Sistem o anki saati ve tarihi otomatik olarak ekler, elle girilmesine gerek kalmaz
+
+        // Entity icinde @PrePersist kullandigimiz icin aslinda otomatik dolacak ama garanti olsun diye burada da setliyoruz
         payment.setPaymentDate(LocalDateTime.now());
 
         return paymentRepository.save(payment);
