@@ -1,6 +1,6 @@
-package repository;
+package com.project.stokyonetim.repository;
 
-import entity.Payment;
+import com.project.stokyonetim.entity.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

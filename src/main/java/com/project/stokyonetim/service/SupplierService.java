@@ -1,7 +1,7 @@
-package service;
+package com.project.stokyonetim.service;
 
-import entity.Supplier;
-import repository.SupplierRepository;
+import com.project.stokyonetim.entity.Supplier;
+import com.project.stokyonetim.repository.SupplierRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

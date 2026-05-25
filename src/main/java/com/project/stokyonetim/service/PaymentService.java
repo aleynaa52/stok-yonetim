@@ -1,10 +1,10 @@
-package service;
+package com.project.stokyonetim.service;
 
-import dto.PaymentRequestDTO;
-import entity.Customer;
-import entity.Payment;
-import repository.CustomerRepository;
-import repository.PaymentRepository;
+import com.project.stokyonetim.dto.PaymentRequestDTO;
+import com.project.stokyonetim.entity.Customer;
+import com.project.stokyonetim.entity.Payment;
+import com.project.stokyonetim.repository.CustomerRepository;
+import com.project.stokyonetim.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;

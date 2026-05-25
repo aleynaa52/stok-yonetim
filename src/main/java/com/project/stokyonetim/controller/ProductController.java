@@ -1,8 +1,8 @@
-package controller;
+package com.project.stokyonetim.controller;
 
-import dto.ProductResponseDTO;
-import entity.Product;
-import service.ProductService;
+import com.project.stokyonetim.dto.ProductResponseDTO;
+import com.project.stokyonetim.entity.Product;
+import com.project.stokyonetim.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

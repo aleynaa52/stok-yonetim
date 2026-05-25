@@ -1,7 +1,7 @@
-package controller;
+package com.project.stokyonetim.controller;
 
-import entity.Supplier;
-import service.SupplierService;
+import com.project.stokyonetim.entity.Supplier;
+import com.project.stokyonetim.service.SupplierService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

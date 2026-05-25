@@ -1,8 +1,8 @@
-package controller;
+package com.project.stokyonetim.controller;
 
-import dto.PaymentRequestDTO;
-import entity.Payment;
-import service.PaymentService;
+import com.project.stokyonetim.dto.PaymentRequestDTO;
+import com.project.stokyonetim.entity.Payment;
+import com.project.stokyonetim.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

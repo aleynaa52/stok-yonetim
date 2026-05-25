@@ -1,7 +1,7 @@
-package repository;
+package com.project.stokyonetim.repository;
 
 
-import entity.Product;
+import com.project.stokyonetim.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package service;
+package com.project.stokyonetim.service;
 
-import entity.Customer;
-import repository.CustomerRepository;
+import com.project.stokyonetim.entity.Customer;
+import com.project.stokyonetim.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

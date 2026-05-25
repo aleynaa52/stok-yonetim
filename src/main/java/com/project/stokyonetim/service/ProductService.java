@@ -1,8 +1,8 @@
-package service;
+package com.project.stokyonetim.service;
 
-import dto.ProductResponseDTO;
-import entity.Product;
-import repository.ProductRepository;
+import com.project.stokyonetim.dto.ProductResponseDTO;
+import com.project.stokyonetim.entity.Product;
+import com.project.stokyonetim.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;

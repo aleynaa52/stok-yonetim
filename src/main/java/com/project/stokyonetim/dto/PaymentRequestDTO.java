@@ -1,4 +1,4 @@
-package dto;
+package com.project.stokyonetim.dto;
 
 import java.math.BigDecimal;
 

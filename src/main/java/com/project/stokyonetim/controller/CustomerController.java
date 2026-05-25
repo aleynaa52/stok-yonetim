@@ -1,7 +1,7 @@
-package controller;
+package com.project.stokyonetim.controller;
 
-import entity.Customer;
-import service.CustomerService;
+import com.project.stokyonetim.entity.Customer;
+import com.project.stokyonetim.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
