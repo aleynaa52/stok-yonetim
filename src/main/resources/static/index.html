@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -6,224 +7,593 @@
     <title>Bean & Bliss | Envanter Yönetimi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* 🌌 Lüks Koyu Tema */
-        body {
-            background-color: #111625;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: #f1f5f9;
+        :root {
+            --sidebar-bg:     #1a0e07;
+            --sidebar-hover:  #2b1a0e;
+            --sidebar-active: #3d2510;
+            --sidebar-border: #5c3a1e;
+            --main-bg:        #f5ede3;
+            --main-bg2:       #ede0d0;
+            --card-bg:        #ffffff;
+            --card-border:    #d9c4ac;
+            --gold:           #c8a84b;
+            --gold-dim:       #7a621e;
+            --gold-light:     #e8c876;
+            --text-primary:   #1a0e07;
+            --text-secondary: #5c3a1e;
+            --text-muted:     #a07850;
+            --table-head-bg:  #f0e4d4;
+            --input-bg:       #ffffff;
+            --sidebar-text:   #eeeae2;
+            --sidebar-text2:  #c4aa88;
+            --sidebar-muted:  #7a5a3a;
         }
 
-        /* 🕶️ Sol Menü */
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--main-bg);
+            font-family: 'Crimson Pro', Georgia, serif;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
         .sidebar {
             height: 100vh;
-            width: 280px;
+            width: 290px;
             position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #0b0e17;
-            padding-top: 35px;
-            border-right: 1px solid #1e293b;
+            top: 0; left: 0;
+            background-color: var(--sidebar-bg);
+            border-right: 2px solid var(--sidebar-border);
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
         }
+        .sidebar::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 290px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+            pointer-events: none;
+        }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: var(--sidebar-bg); }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-border); border-radius: 2px; }
+
         .sidebar-brand {
-            color: #ffffff;
+            padding: 26px 24px 22px;
+            border-bottom: 1px solid var(--sidebar-border);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .brand-emblem {
+            width: 64px;
+            height: 64px;
+            background: radial-gradient(circle at 40% 35%, #3d2510, #1a0e07);
+            border: 2px solid var(--gold-dim);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(200,168,75,0.22), inset 0 1px 0 rgba(200,168,75,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-emblem::before {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            border: 1px solid rgba(200,168,75,0.18);
+        }
+        .brand-text-wrap { display: flex; flex-direction: column; line-height: 1.15; }
+        .brand-name {
+            font-family: 'Cinzel', serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            color: var(--gold-light);
+            letter-spacing: 3px;
             text-transform: uppercase;
-            padding: 0 30px 30px 30px;
-            border-bottom: 1px solid #1e293b;
-            letter-spacing: 2.5px;
-            margin-bottom: 25px;
+        }
+        .brand-sub {
+            font-family: 'Cinzel', serif;
+            font-weight: 400;
+            font-size: 0.6rem;
+            color: var(--gold-dim);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        .menu-section-label {
+            padding: 14px 26px 5px;
+            font-size: 0.58rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sidebar-muted);
+            font-weight: 600;
         }
         .sidebar-menu a {
-            padding: 14px 30px;
-            color: #ffffff !important;
-            display: block;
+            padding: 11px 22px 11px 26px;
+            color: var(--sidebar-text2) !important;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 400;
             font-size: 0.95rem;
-            transition: all 0.2s ease;
+            font-family: 'Crimson Pro', serif;
+            transition: all 0.18s ease;
             cursor: pointer;
+            border-left: 3px solid transparent;
         }
-        .sidebar-menu a:hover, .sidebar-menu a.active {
-            color: #ffffff;
-            background-color: #1e293b;
-            border-left: 4px solid #cbd5e1;
+        .sidebar-menu a:hover {
+            color: var(--sidebar-text) !important;
+            background-color: var(--sidebar-hover);
+            border-left-color: var(--sidebar-border);
         }
-        .sidebar-menu i { margin-right: 14px; width: 18px; color: #ffffff; }
+        .sidebar-menu a.active {
+            color: var(--gold-light) !important;
+            background-color: var(--sidebar-active);
+            border-left-color: var(--gold);
+            font-weight: 600;
+        }
+        .sidebar-menu a.active .menu-icon { color: var(--gold) !important; }
+        .menu-icon {
+            width: 18px;
+            font-size: 0.82rem;
+            color: var(--sidebar-muted);
+            flex-shrink: 0;
+            text-align: center;
+            transition: color 0.18s;
+        }
+        .sidebar-menu a:hover .menu-icon { color: var(--sidebar-text2); }
+        .sidebar-divider { height: 1px; background: var(--sidebar-border); margin: 8px 26px; }
 
-        .main-content { margin-left: 280px; padding: 50px; }
-        .section-title { font-size: 1.6rem; font-weight: 600; color: #ffffff; margin-bottom: 35px; }
+        .main-content {
+            margin-left: 290px;
+            padding: 40px 48px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--main-bg) 0%, var(--main-bg2) 100%);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+            margin-bottom: 0;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--card-border);
+        }
 
         .card {
-            background: #1e293b;
-            border: 1px solid #475569;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            margin-bottom: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(92,58,30,0.1);
+            margin-bottom: 24px;
         }
 
-        .form-label { color: #ffffff !important; font-weight: 700; font-size: 0.9rem; }
-
-        /* 🛠️ BEMBEYAZ KUTULAR */
-        .form-control, .form-select {
-            background-color: #ffffff !important;
-            border: 2px solid #cbd5e1 !important;
-            color: #0f172a !important;
-            padding: 12px 14px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 8px;
-        }
-
-        /* 📊 TABLOLAR */
-        .table { color: #ffffff !important; margin-bottom: 0; }
+        .table { color: var(--text-primary) !important; margin-bottom: 0; }
         .table th {
-            font-weight: 800;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            color: #ffffff !important;
-            padding: 18px;
-            border-bottom: 3px solid #64748b;
-            background-color: #0b0e17;
+            font-size: 0.68rem;
+            color: var(--text-secondary) !important;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--card-border);
+            background-color: var(--table-head-bg);
+            letter-spacing: 1.5px;
         }
         .table td {
-            padding: 18px;
-            border-bottom: 1px solid #475569;
+            padding: 13px 18px;
+            border-bottom: 1px solid rgba(217,196,172,0.5);
             font-size: 0.95rem;
+            color: var(--text-primary) !important;
+            background-color: var(--card-bg);
+            vertical-align: middle;
+        }
+        .table tbody tr:last-child td { border-bottom: none; }
+        .table tbody tr:hover td { background-color: #fdf5ec; transition: background 0.15s; }
+
+        .form-label {
+            color: var(--text-secondary) !important;
             font-weight: 600;
-            color: #ffffff !important;
-            background-color: #1e293b;
+            font-size: 0.72rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .form-control, .form-select {
+            background-color: #fff !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #1a0e07 !important;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--gold-dim) !important;
+            box-shadow: 0 0 0 3px rgba(200,168,75,0.15) !important;
+            outline: none;
+        }
+        .form-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--gold-dim);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
         }
 
-        .text-light-custom { color: #ffffff !important; font-weight: 600; }
-        .text-white-custom { color: #ffca28 !important; font-weight: 700; }
-        .text-desc-custom { color: #e2e8f0 !important; font-weight: 600; }
-        .font-mono { font-family: Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
-        .badge-stok { font-size: 0.85rem; padding: 6px 12px; border-radius: 6px; font-weight: 700; }
+        .btn-custom {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 6px;
+            padding: 11px 20px;
+            transition: all 0.2s;
+        }
+        .btn-custom:hover {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            color: #1a0e07;
+            box-shadow: 0 4px 18px rgba(200,168,75,0.35);
+            transform: translateY(-1px);
+        }
+        .btn-gold-outline {
+            background: transparent;
+            color: var(--gold-dim);
+            border: 1px solid var(--gold-dim);
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            padding: 8px 18px;
+            transition: all 0.2s;
+        }
+        .btn-gold-outline:hover {
+            background: var(--gold);
+            color: #fff;
+            box-shadow: 0 2px 14px rgba(200,168,75,0.28);
+        }
 
-        .btn-custom { background-color: #f1f5f9; color: #0f172a; font-weight: 700; border: none; transition: all 0.2s; }
-        .btn-custom:hover { background-color: #cbd5e1; }
+        .sku-badge {
+            background: rgba(26,14,7,0.07);
+            border: 1px solid var(--card-border);
+            color: var(--gold-dim) !important;
+            font-family: Menlo, Monaco, Consolas, monospace;
+            font-size: 0.76rem;
+            padding: 3px 9px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .stock-badge { font-size: 0.76rem; padding: 4px 10px; border-radius: 5px; font-family: 'Cinzel', serif; font-weight: 600; letter-spacing: 0.5px; }
+        .stock-ok  { background: rgba(200,168,75,0.12); color: #7a621e !important; border: 1px solid rgba(200,168,75,0.4); }
+        .stock-low { background: rgba(180,60,60,0.1);  color: #b43c3c !important; border: 1px solid rgba(180,60,60,0.3); }
+        .method-badge {
+            background: rgba(26,14,7,0.06);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary) !important;
+            font-family: Menlo, Monaco, monospace;
+            font-size: 0.73rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        .name-cell    { font-weight: 600; color: var(--text-primary)   !important; }
+        .secondary-cell { color: var(--text-secondary) !important; font-size: 0.9rem; }
+        .mono-cell    { font-family: Menlo, monospace; font-size: 0.84rem; color: var(--gold-dim) !important; }
+        .amount-text  { color: #2e7d32 !important; font-family: Menlo, monospace; font-weight: 700; }
+
+        .adisyon-card { background: var(--card-bg) !important; border: 1px solid var(--gold-dim) !important; }
+        .adisyon-item {
+            background: rgba(200,168,75,0.06);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+        .adisyon-time { color: var(--gold-dim); font-family: Menlo, monospace; font-size: 0.8rem; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--main-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+
         .page-section { display: none; }
         .page-section.active-section { display: block; }
-        .adisyon-card { background: #0b0e17 !important; border: 2px dashed #ffca28 !important; }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <div class="sidebar-brand"><i class="fa-solid fa-mug-hot text-white me-2"></i> Bean & Bliss Co.</div>
+    <div class="sidebar-brand">
+        <div class="brand-emblem">
+            <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="28" cy="28" r="10" fill="#c8a84b"/>
+                <circle cx="28" cy="28" r="6" fill="#a07820"/>
+                <circle cx="72" cy="28" r="10" fill="#c8a84b"/>
+                <circle cx="72" cy="28" r="6" fill="#a07820"/>
+                <circle cx="50" cy="40" r="22" fill="#c8a84b"/>
+                <ellipse cx="50" cy="46" rx="13" ry="9" fill="#a07820"/>
+                <circle cx="41" cy="34" r="3.5" fill="#1a0e07"/>
+                <circle cx="59" cy="34" r="3.5" fill="#1a0e07"/>
+                <circle cx="42" cy="33" r="1.2" fill="#e8c876"/>
+                <circle cx="60" cy="33" r="1.2" fill="#e8c876"/>
+                <ellipse cx="50" cy="44" rx="4" ry="2.5" fill="#1a0e07"/>
+                <path d="M44 49 Q50 54 56 49" stroke="#1a0e07" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <ellipse cx="50" cy="75" rx="18" ry="16" fill="#c8a84b"/>
+                <ellipse cx="27" cy="74" rx="7" ry="10" fill="#c8a84b" transform="rotate(-15,27,74)"/>
+                <ellipse cx="73" cy="74" rx="7" ry="10" fill="#c8a84b" transform="rotate(15,73,74)"/>
+                <path d="M37 68 L40 84 L60 84 L63 68 Z" fill="#fff" stroke="#c8a84b" stroke-width="1.5"/>
+                <ellipse cx="50" cy="68" rx="13" ry="4" fill="#fff" stroke="#c8a84b" stroke-width="1.5"/>
+                <ellipse cx="50" cy="68" rx="10" ry="3" fill="#5c3a1e"/>
+                <path d="M44 62 Q45.5 58 44 54" stroke="#e8c876" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+                <path d="M50 60 Q51.5 56 50 52" stroke="#e8c876" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+                <path d="M56 62 Q57.5 58 56 54" stroke="#e8c876" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+                <path d="M60 72 Q68 72 68 76 Q68 81 60 81" stroke="#c8a84b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="brand-text-wrap">
+            <span class="brand-name">Bean &amp; Bliss</span>
+            <span class="brand-sub">Co. — Est. 2024</span>
+        </div>
+    </div>
+
     <div class="sidebar-menu">
-        <a onclick="switchPage('dashboard')" id="menu-dashboard" class="active"><i class="fa-solid fa-chart-simple"></i> Depo Durumu</a>
-        <a onclick="switchPage('urunler')" id="menu-urunler"><i class="fa-solid fa-box"></i> Ürün Yönetimi</a>
-        <a onclick="switchPage('musteriler')" id="menu-musteriler"><i class="fa-solid fa-user-group"></i> Müşteriler</a>
-        <a onclick="switchPage('siparis')" id="menu-siparis"><i class="fa-solid fa-receipt"></i> Sipariş Girişi</a>
-        <a onclick="switchPage('odemeler')" id="menu-odemeler"><i class="fa-solid fa-wallet"></i> Kasa Geçmişi</a>
+        <div class="menu-section-label">Genel Bakış</div>
+        <a onclick="switchPage('dashboard')" id="menu-dashboard" class="active">
+            <i class="fa-solid fa-chart-simple menu-icon"></i> Depo Durumu
+        </a>
+
+        <div class="menu-section-label">Envanter</div>
+        <a onclick="switchPage('urunler')" id="menu-urunler">
+            <i class="fa-solid fa-boxes-stacked menu-icon"></i> Tüm Envanter
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="menu-section-label">Müşteri & Sipariş</div>
+        <a onclick="switchPage('musteriler')" id="menu-musteriler">
+            <i class="fa-solid fa-user-group menu-icon"></i> Müşteriler
+        </a>
+        <a onclick="switchPage('siparis')" id="menu-siparis">
+            <i class="fa-solid fa-receipt menu-icon"></i> Sipariş Girişi
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="menu-section-label">Tedarik</div>
+        <a onclick="switchPage('tedarikciler')" id="menu-tedarikciler">
+            <i class="fa-solid fa-truck menu-icon"></i> Tedarikçiler
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="menu-section-label">Finans</div>
+        <a onclick="switchPage('odemeler')" id="menu-odemeler">
+            <i class="fa-solid fa-wallet menu-icon"></i> Kasa Geçmişi
+        </a>
     </div>
 </div>
 
 <div class="main-content">
 
+    <!-- DEPO DURUMU -->
     <div id="section-dashboard" class="page-section active-section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="section-title m-0">Anlık Stok Matrisi</div>
-            <button class="btn btn-outline-light btn-sm px-3 py-2 fw-medium" onclick="stoklariGetir()">🔄 Listeyi Yenile</button>
+        <div class="page-header">
+            <div class="section-title">Anlık Stok Matrisi</div>
+            <button class="btn-gold-outline" onclick="stoklariGetir()">
+                <i class="fa-solid fa-arrows-rotate me-2"></i>Listeyi Yenile
+            </button>
         </div>
-        <div class="card p-2">
-            <table class="table align-middle">
-                <thead>
-                <tr><th>SKU Kodu</th><th>Ürün Adı</th><th>Marka / Kategori</th><th class="text-center">Stok Durumu</th><th class="text-end">Birim Fiyat</th></tr>
-                </thead>
+        <div class="card p-0">
+            <table class="table align-middle mb-0">
+                <thead><tr>
+                    <th>SKU Kodu</th><th>Ürün Adı</th><th>Marka / Kategori</th>
+                    <th class="text-center">Stok</th><th class="text-end">Birim Fiyat</th>
+                </tr></thead>
                 <tbody id="urunTabloGövde"></tbody>
             </table>
         </div>
     </div>
 
+    <!-- ÜRÜN YÖNETİMİ -->
     <div id="section-urunler" class="page-section">
-        <div class="section-title">Envanter Kayıt Kataloğu</div>
-        <div class="row">
-            <div class="col-md-4 mb-4">
+        <div class="page-header"><div class="section-title">Envanter Kayıt Kataloğu</div></div>
+        <div class="row g-4">
+            <div class="col-md-4">
                 <div class="card p-4">
-                    <h6 class="mb-4" id="urunFormBaslik">Yeni Ürün Tanımla</h6>
+                    <div class="form-card-title" id="urunFormBaslik">Yeni Ürün Tanımla</div>
                     <form id="urunEkleForm" onsubmit="urunKaydet(event)">
                         <input type="hidden" id="edit-product-id" value="">
                         <div class="mb-3"><label class="form-label mb-1">Ürün Adı</label><input type="text" id="add-name" class="form-control" required></div>
-                        <div class="mb-3"><label class="form-label mb-1">SKU Kodu</label><input type="text" id="add-sku" class="form-control font-mono" required></div>
+                        <div class="mb-3"><label class="form-label mb-1">SKU Kodu</label><input type="text" id="add-sku" class="form-control" style="font-family:Menlo,monospace" required></div>
                         <div class="row mb-3">
                             <div class="col"><label class="form-label mb-1">Marka</label><input type="text" id="add-brand" class="form-control"></div>
-                            <div class="col"><label class="form-label mb-1">Kategori / Tür</label><input type="text" id="add-model" class="form-control"></div>
+                            <div class="col">
+                                <label class="form-label mb-1">Kategori</label>
+                                <select id="add-model" class="form-select">
+                                    <option value="">— Seçiniz —</option>
+                                    <option value="Kahveler">☕ Kahveler</option>
+                                    <option value="Servis Ürünleri">🍷 Servis Ürünleri</option>
+                                    <option value="Özel Koleksiyon">⭐ Özel Koleksiyon</option>
+                                    <option value="Dondurulmuş Gıdalar">❄️ Dondurulmuş Gıdalar</option>
+                                    <option value="Aksesuarlar">🛍️ Aksesuarlar</option>
+                                    <option value="Genel">📦 Genel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label mb-1">Tedarikçi</label>
+                            <select id="add-supplier" class="form-select">
+                                <option value="">— Tedarikçi Seçiniz —</option>
+                            </select>
                         </div>
                         <div class="row mb-4">
                             <div class="col"><label class="form-label mb-1">Stok Adedi</label><input type="number" id="add-stock" class="form-control" required></div>
                             <div class="col"><label class="form-label mb-1">Fiyat (TL)</label><input type="number" step="0.01" id="add-price" class="form-control" required></div>
                         </div>
-                        <button type="submit" id="urunKaydetButon" class="btn btn-custom w-100 py-2">Sisteme Güvenle Kaydet</button>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-8"><div class="card p-2"><table class="table align-middle"><thead><tr><th>SKU</th><th>Ürün Tanımı</th><th class="text-end">Fiyat</th><th class="text-center">İşlem</th></tr></thead><tbody id="katalogTabloGövde"></tbody></table></div></div>
-        </div>
-    </div>
-
-    <div id="section-musteriler" class="page-section">
-        <div class="section-title">Müşteri Portföyü</div>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card p-4">
-                    <h6 class="mb-4" id="musteriFormBaslik">Yeni Müşteri Ekle</h6>
-                    <form id="musteriEkleForm" onsubmit="musteriKaydet(event)">
-                        <input type="hidden" id="edit-customer-id" value="">
-                        <div class="mb-3"><label class="form-label mb-1">Adı</label><input type="text" id="cust-firstname" class="form-control" required></div>
-                        <div class="mb-3"><label class="form-label mb-1">Soyadı</label><input type="text" id="cust-lastname" class="form-control" required></div>
-                        <div class="mb-4"><label class="form-label mb-1">E-Posta Adresi</label><input type="email" id="cust-email" class="form-control" required></div>
-                        <button type="submit" id="musteriKaydetButon" class="btn btn-custom w-100 py-2">Müşteriyi Kaydet</button>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-8"><div class="card p-2"><table class="table align-middle"><thead><tr><th>Müşteri Unvanı</th><th>E-Posta</th><th>Telefon İletişim</th><th class="text-center">İşlem</th></tr></thead><tbody id="musteriTabloGövde"></tbody></table></div></div>
-        </div>
-    </div>
-
-    <div id="section-siparis" class="page-section">
-        <div class="section-title">Sipariş Merkezi & Canlı Adisyon Odası</div>
-        <div class="row">
-            <div class="col-md-5 mb-4">
-                <div class="card p-4">
-                    <h6 class="mb-4">Sipariş Oluştur</h6>
-                    <form id="siparisForm" onsubmit="siparisGec(event)">
-                        <div class="mb-3"><label class="form-label mb-1">Cari Müşteri</label><select id="order-customer-id" class="form-select" required></select></div>
-                        <div class="mb-3"><label class="form-label mb-1">Ürün</label><select id="order-product-id" class="form-select" required></select></div>
-                        <div class="mb-4"><label class="form-label mb-1">Adet</label><input type="number" id="order-quantity" class="form-control" value="1" min="1" required></div>
-                        <button type="submit" class="btn btn-custom w-100 py-2">Siparişi Onayla</button>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-7"><div class="card p-4 adisyon-card"><h5 class="mb-4 text-warning fw-bold"><i class="fa-solid fa-receipt me-2"></i> Aktif Adisyon Takip Fişleri</h5><div id="adisyonGövde" style="max-height: 450px; overflow-y: auto;"></div></div></div>
-        </div>
-    </div>
-
-    <div id="section-odemeler" class="page-section">
-        <div class="section-title">Finansal Tahsilat Akışı</div>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card p-4">
-                    <h6 class="mb-4" id="kasaFormBaslik">Tahsilat Makbuzu Kes</h6>
-                    <form id="odemeEkleForm" onsubmit="odemeKaydet(event)">
-                        <input type="hidden" id="edit-payment-id" value="">
-                        <div class="mb-3"><label class="form-label mb-1">Ödemeyi Yapan Müşteri</label><select id="pay-customer-id" class="form-select" required></select></div>
-                        <div class="mb-3"><label class="form-label mb-1">Tahsil Edilen Tutar (TL)</label><input type="number" step="0.01" id="pay-amount" class="form-control" required></div>
-                        <div class="mb-3"><label class="form-label mb-1">Ödeme Kanalı</label><select id="pay-method" class="form-select" required><option value="CREDIT_CARD">Kredi Kartı</option><option value="CASH">Nakit / Kasa</option><option value="BANK_TRANSFER">Havale / EFT</option></select></div>
-                        <div class="mb-4"><label class="form-label mb-1">Ödeme Açıklaması / Ne İçin?</label><input type="text" id="pay-notes" class="form-control" placeholder="Örn: Pasta Malzemesi Satışı" required></div>
-                        <button type="submit" id="kasaKaydetButon" class="btn btn-custom w-100 py-2">Tahsilatı Tamamla</button>
+                        <button type="submit" id="urunKaydetButon" class="btn btn-custom w-100">Sisteme Kaydet</button>
                     </form>
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card p-2">
-                    <table class="table align-middle">
-                        <thead>
-                        <tr><th>Valör Tarihi</th><th>Ödeyen Müşteri</th><th>Açıklama / Ne İçin?</th><th>Ödeme Tipi</th><th class="text-end">Tutar</th><th class="text-center">İşlem</th></tr>
-                        </thead>
+                <div class="card p-0">
+                    <table class="table align-middle mb-0">
+                        <thead><tr><th>SKU</th><th>Ürün Tanımı</th><th>Tedarikçi</th><th class="text-end">Fiyat</th><th class="text-center">İşlem</th></tr></thead>
+                        <tbody id="katalogTabloGövde"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MÜŞTERİLER -->
+    <div id="section-musteriler" class="page-section">
+        <div class="page-header"><div class="section-title">Müşteri Portföyü</div></div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <div class="form-card-title" id="musteriFormBaslik">Yeni Müşteri Ekle</div>
+                    <form id="musteriEkleForm" onsubmit="musteriKaydet(event)">
+                        <input type="hidden" id="edit-customer-id" value="">
+                        <div class="mb-3"><label class="form-label mb-1">Adı</label><input type="text" id="cust-firstname" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label mb-1">Soyadı</label><input type="text" id="cust-lastname" class="form-control" required></div>
+                        <div class="mb-4"><label class="form-label mb-1">E-Posta</label><input type="email" id="cust-email" class="form-control" required></div>
+                        <button type="submit" id="musteriKaydetButon" class="btn btn-custom w-100">Müşteriyi Kaydet</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card p-0">
+                    <table class="table align-middle mb-0">
+                        <thead><tr><th>Müşteri Unvanı</th><th>E-Posta</th><th>Telefon</th><th class="text-center">İşlem</th></tr></thead>
+                        <tbody id="musteriTabloGövde"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SİPARİŞ -->
+    <div id="section-siparis" class="page-section">
+        <div class="page-header"><div class="section-title">Sipariş Merkezi</div></div>
+        <div class="row g-4">
+            <div class="col-md-5">
+                <div class="card p-4">
+                    <div class="form-card-title">Sipariş Oluştur</div>
+                    <form id="siparisForm" onsubmit="siparisGec(event)">
+                        <div class="mb-3"><label class="form-label mb-1">Cari Müşteri</label><select id="order-customer-id" class="form-select" required></select></div>
+                        <div class="mb-3"><label class="form-label mb-1">Ürün</label><select id="order-product-id" class="form-select" required></select></div>
+                        <div class="mb-4"><label class="form-label mb-1">Adet</label><input type="number" id="order-quantity" class="form-control" value="1" min="1" required></div>
+                        <button type="submit" class="btn btn-custom w-100">Siparişi Onayla</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card p-4 adisyon-card">
+                    <div class="form-card-title" style="color:var(--gold-dim)">
+                        <i class="fa-solid fa-receipt me-2" style="color:var(--gold)"></i>Aktif Adisyon Fişleri
+                    </div>
+                    <div id="adisyonGövde" style="max-height:420px;overflow-y:auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEDARİKÇİLER -->
+    <div id="section-tedarikciler" class="page-section">
+        <div class="page-header"><div class="section-title">Tedarikçi Yönetimi</div></div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <div class="form-card-title" id="tedarikciformBaslik">Yeni Tedarikçi Ekle</div>
+                    <form id="tedarikciekleForm" onsubmit="tedarikcikaydet(event)">
+                        <input type="hidden" id="edit-supplier-id" value="">
+                        <div class="mb-3"><label class="form-label mb-1">Firma / Tedarikçi Adı</label><input type="text" id="sup-name" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label mb-1">Yetkili Kişi</label><input type="text" id="sup-contact" class="form-control"></div>
+                        <div class="mb-3"><label class="form-label mb-1">E-Posta</label><input type="email" id="sup-email" class="form-control"></div>
+                        <div class="mb-3"><label class="form-label mb-1">Telefon</label><input type="text" id="sup-phone" class="form-control"></div>
+                        <div class="mb-4"><label class="form-label mb-1">Adres</label><textarea id="sup-address" class="form-control" rows="2" style="resize:none"></textarea></div>
+                        <button type="submit" id="tedarikcikaydetButon" class="btn btn-custom w-100">Tedarikçiyi Kaydet</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card p-0">
+                    <table class="table align-middle mb-0">
+                        <thead><tr>
+                            <th>Firma Adı</th>
+                            <th>Yetkili Kişi</th>
+                            <th>E-Posta</th>
+                            <th>Telefon</th>
+                            <th class="text-center">İşlem</th>
+                        </tr></thead>
+                        <tbody id="tedarikcitabloGövde"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÖDEMELER -->
+    <div id="section-odemeler" class="page-section">
+        <div class="page-header"><div class="section-title">Finansal Tahsilat Akışı</div></div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <div class="form-card-title" id="kasaFormBaslik">Tahsilat Makbuzu Kes</div>
+                    <form id="odemeEkleForm" onsubmit="odemeKaydet(event)">
+                        <input type="hidden" id="edit-payment-id" value="">
+                        <div class="mb-3"><label class="form-label mb-1">Ödemeyi Yapan Müşteri</label><select id="pay-customer-id" class="form-select" required></select></div>
+                        <div class="mb-3"><label class="form-label mb-1">Tahsil Edilen Tutar (TL)</label><input type="number" step="0.01" id="pay-amount" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label mb-1">Ödeme Kanalı</label>
+                            <select id="pay-method" class="form-select" required>
+                                <option value="CREDIT_CARD">Kredi Kartı</option>
+                                <option value="CASH">Nakit / Kasa</option>
+                                <option value="BANK_TRANSFER">Havale / EFT</option>
+                            </select>
+                        </div>
+                        <div class="mb-4"><label class="form-label mb-1">Ödeme Açıklaması</label><input type="text" id="pay-notes" class="form-control" placeholder="Örn: Pasta Malzemesi Satışı" required></div>
+                        <button type="submit" id="kasaKaydetButon" class="btn btn-custom w-100">Tahsilatı Tamamla</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card p-0">
+                    <table class="table align-middle mb-0">
+                        <thead><tr>
+                            <th>Valör Tarihi</th><th>Ödeyen Müşteri</th><th>Açıklama</th>
+                            <th>Ödeme Tipi</th><th class="text-end">Tutar</th><th class="text-center">İşlem</th>
+                        </tr></thead>
                         <tbody id="odemeTabloGövde"></tbody>
                     </table>
                 </div>
@@ -236,99 +606,136 @@
 <script>
     let globalProducts = [];
     let globalCustomers = [];
+    let globalSuppliers = [];
     let localPayments = [];
-    let deletedPaymentIds = new Set(); // 🚀 SİLİNENLERİ ASLA GERİ GETİRMEYEN KARA LİSTE BALKANI!
+    let deletedPaymentIds = new Set();
     let localOrders = [];
-
-    const sahteTelefonlar = ["0532 987 65 43", "0544 555 44 33", "0505 222 88 99", "0555 111 22 33", "0533 444 55 66", "0542 333 22 11"];
+    const sahteTelefonlar = ["0532 987 65 43","0544 555 44 33","0505 222 88 99","0555 111 22 33","0533 444 55 66","0542 333 22 11"];
 
     document.addEventListener("DOMContentLoaded", function() {
         Promise.all([
-            fetch('/api/products').then(res => res.json()),
-            fetch('/api/customers').then(res => res.json())
-        ]).then(([products, customers]) => {
+            fetch('/api/products').then(r => r.json()),
+            fetch('/api/customers').then(r => r.json()),
+            fetch('/api/suppliers').then(r => r.json())
+        ]).then(([products, customers, suppliers]) => {
             globalProducts = products;
             globalCustomers = customers;
+            globalSuppliers = suppliers;
             stoklariGetir();
             siparisFormuHazirla();
+            tedarikciDropdownDoldur();
+        }).catch(err => {
+            // suppliers yüklenemezse diğerleri çalışmaya devam etsin
+            Promise.all([
+                fetch('/api/products').then(r => r.json()),
+                fetch('/api/customers').then(r => r.json())
+            ]).then(([products, customers]) => {
+                globalProducts = products;
+                globalCustomers = customers;
+                stoklariGetir();
+                siparisFormuHazirla();
+            });
         });
     });
+
+    function tedarikciDropdownDoldur() {
+        const sel = document.getElementById("add-supplier");
+        if (!sel) return;
+        // Mevcut ilk option'ı koru
+        sel.innerHTML = '<option value="">— Tedarikçi Seçiniz —</option>';
+        globalSuppliers.forEach(s => {
+            const isim = s.name || s.companyName || s.supplierName || (s.firstName ? s.firstName + ' ' + s.lastName : null) || ('Tedarikçi #' + s.id);
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = isim;
+            sel.appendChild(opt);
+        });
+    }
+
+    function tedarikciAdiGetir(supplierId) {
+        if (!supplierId) return '—';
+        const s = globalSuppliers.find(x => x.id == supplierId);
+        if (!s) return '—';
+        return s.name || s.companyName || s.supplierName || (s.firstName ? s.firstName + ' ' + s.lastName : null) || ('Tedarikçi #' + s.id);
+    }
 
     function switchPage(pageId) {
         document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-section'));
         document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
         document.getElementById('section-' + pageId).classList.add('active-section');
-        document.getElementById('menu-' + pageId).classList.add('active');
-
-        if (pageId === 'dashboard') stoklariGetir();
-        else if (pageId === 'urunler') { urunKataloguGetir(); urunFormuSifirla(); }
-        else if (pageId === 'musteriler') { musterileriGetir(); musteriFormuSifirla(); }
-        else if (pageId === 'siparis') { siparisFormuHazirla(); adisyonlariGetir(); }
-        else if (pageId === 'odemeler') { odemeleriHazirla(); kasaFormuSifirla(); }
+        const m = document.getElementById('menu-' + pageId);
+        if (m) m.classList.add('active');
+        if (pageId === 'dashboard')    stoklariGetir();
+        else if (pageId === 'urunler')    { urunKataloguGetir(); urunFormuSifirla(); }
+        else if (pageId === 'tedarikciler') { tedarikcilerigetir(); tedarikciformuSifirla(); }
+        else if (pageId === 'siparis')    { siparisFormuHazirla(); adisyonlariGetir(); }
+        else if (pageId === 'odemeler')   { odemeleriHazirla(); kasaFormuSifirla(); }
     }
 
-    // ÜRÜN İŞLEMLERİ
+    // ── ÜRÜN ──
     function stoklariGetir() { renderStokTablo(globalProducts); }
     function renderStokTablo(data) {
         document.getElementById("urunTabloGövde").innerHTML = data.map(u => {
-            let renk = u.stockQuantity <= 10 ? "bg-danger text-white" : "bg-success text-white";
+            let sc = u.stockQuantity <= 10 ? "stock-low" : "stock-ok";
             return `<tr>
-                    <td><span class="badge bg-dark text-white border border-secondary-subtle font-mono px-2 py-1">${u.sku}</span></td>
-                    <td class="fw-bold text-white">${u.name}</td>
-                    <td class="text-light-custom">${u.brand || '-'} / ${u.model || 'Genel'}</td>
-                    <td class="text-center"><span class="badge ${renk} badge-stok">${u.stockQuantity} Adet</span></td>
-                    <td class="text-end fw-bold text-white">${u.price.toFixed(2)} TL</td>
-                </tr>`;
+                <td><span class="sku-badge">${u.sku}</span></td>
+                <td class="name-cell">${u.name}</td>
+                <td class="secondary-cell">${u.brand||'—'} / ${u.model||'Genel'}</td>
+                <td class="text-center"><span class="stock-badge ${sc}">${u.stockQuantity} Adet</span></td>
+                <td class="text-end mono-cell">${u.price.toFixed(2)} ₺</td>
+            </tr>`;
         }).join('');
     }
 
     function urunKataloguGetir() { renderKatalogTablo(globalProducts); }
     function renderKatalogTablo(data) {
         document.getElementById("katalogTabloGövde").innerHTML = data.map(u => `<tr>
-                <td><span class="badge bg-dark text-white border border-secondary-subtle font-mono">${u.sku}</span></td>
-                <td class="fw-bold text-white">${u.name}</td>
-                <td class="text-end fw-bold text-white">${u.price.toFixed(2)} TL</td>
-                <td class="text-center">
-                    <button class="btn btn-sm btn-outline-warning me-1" onclick="urunDuzenleHazirla(${u.id})"><i class="fa-solid fa-pen"></i></button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="urunSil(${u.id})"><i class="fa-solid fa-trash"></i></button>
-                </td>
-            </tr>`).join('');
+            <td><span class="sku-badge">${u.sku}</span></td>
+            <td class="name-cell">${u.name}</td>
+            <td class="secondary-cell">${tedarikciAdiGetir(u.supplierId)}</td>
+            <td class="text-end mono-cell">${u.price.toFixed(2)} ₺</td>
+            <td class="text-center">
+                <button class="btn btn-sm btn-outline-warning me-1 py-1 px-2" style="font-size:.73rem" onclick="urunDuzenleHazirla(${u.id})"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-sm btn-outline-danger py-1 px-2" style="font-size:.73rem" onclick="urunSil(${u.id})"><i class="fa-solid fa-trash"></i></button>
+            </td>
+        </tr>`).join('');
     }
 
     function urunKaydet(e) {
         e.preventDefault();
         const editId = document.getElementById("edit-product-id").value;
-        const productData = {
+        const supplierId = document.getElementById("add-supplier").value;
+        const d = {
             name: document.getElementById("add-name").value,
             sku: document.getElementById("add-sku").value,
             brand: document.getElementById("add-brand").value,
             model: document.getElementById("add-model").value,
+            supplierId: supplierId ? parseInt(supplierId) : null,
             stockQuantity: parseInt(document.getElementById("add-stock").value),
             price: parseFloat(document.getElementById("add-price").value)
         };
-
         if (editId) {
-            let idx = globalProducts.findIndex(p => p.id == editId);
-            if(idx !== -1) globalProducts[idx] = { ...globalProducts[idx], ...productData };
-            fetch('/api/products/' + editId, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(productData) });
+            let i = globalProducts.findIndex(p => p.id == editId);
+            if(i !== -1) globalProducts[i] = {...globalProducts[i], ...d};
+            fetch('/api/products/'+editId, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
             alert("Ürün başarıyla güncellendi! 🔄");
         } else {
-            productData.id = Date.now();
-            globalProducts.unshift(productData);
-            fetch('/api/products', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(productData) });
-            alert("Ürün başarıyla listeye eklendi! ✨");
+            d.id = Date.now(); globalProducts.unshift(d);
+            fetch('/api/products', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+            alert("Ürün başarıyla eklendi! ✨");
         }
         urunFormuSifirla(); urunKataloguGetir();
     }
 
     function urunDuzenleHazirla(id) {
-        let p = globalProducts.find(prod => prod.id == id);
+        let p = globalProducts.find(x => x.id == id);
         if(p) {
             document.getElementById("edit-product-id").value = p.id;
             document.getElementById("add-name").value = p.name;
             document.getElementById("add-sku").value = p.sku;
-            document.getElementById("add-brand").value = p.brand || "";
-            document.getElementById("add-model").value = p.model || "";
+            document.getElementById("add-brand").value = p.brand||"";
+            document.getElementById("add-model").value = p.model||"";
+            document.getElementById("add-supplier").value = p.supplierId||"";
             document.getElementById("add-stock").value = p.stockQuantity;
             document.getElementById("add-price").value = p.price;
             document.getElementById("urunFormBaslik").innerText = "Ürünü Düzenle";
@@ -339,30 +746,30 @@
     function urunSil(id) {
         if(confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
             globalProducts = globalProducts.filter(p => p.id != id);
-            fetch('/api/products/' + id, { method: 'DELETE' });
-            alert("Ürün sistemden silindi!");
-            urunKataloguGetir();
+            fetch('/api/products/'+id, {method:'DELETE'});
+            alert("Ürün sistemden silindi!"); urunKataloguGetir();
         }
     }
+
     function urunFormuSifirla() {
         document.getElementById("urunEkleForm").reset();
         document.getElementById("edit-product-id").value = "";
         document.getElementById("urunFormBaslik").innerText = "Yeni Ürün Tanımla";
-        document.getElementById("urunKaydetButon").innerText = "Sisteme Güvenle Kaydet";
+        document.getElementById("urunKaydetButon").innerText = "Sisteme Kaydet";
     }
 
-    // MÜŞTERİ YÖNETİMİ
+    // ── MÜŞTERİ ──
     function musterileriGetir() { renderMusteriTablo(globalCustomers); }
     function renderMusteriTablo(data) {
-        document.getElementById("musteriTabloGövde").innerHTML = data.map((m, index) => {
-            let tel = m.phoneNumber || sahteTelefonlar[index % sahteTelefonlar.length];
+        document.getElementById("musteriTabloGövde").innerHTML = data.map((m,i) => {
+            let tel = m.phoneNumber || sahteTelefonlar[i % sahteTelefonlar.length];
             return `<tr>
-                <td class="fw-bold text-white"><i class="fa-regular fa-user text-white me-2"></i>${m.firstName} ${m.lastName}</td>
-                <td class="text-light-custom fw-bold">${m.email || '-'}</td>
-                <td class="font-mono text-white-custom"><i class="fa-solid fa-phone-flip text-white small me-2"></i>${tel}</td>
+                <td class="name-cell"><i class="fa-regular fa-user me-2" style="color:var(--text-muted)"></i>${m.firstName} ${m.lastName}</td>
+                <td class="secondary-cell">${m.email||'—'}</td>
+                <td class="mono-cell">${tel}</td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-warning me-1" onclick="musteriDuzenleHazirla(${m.id})"><i class="fa-solid fa-pen"></i></button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="musteriSil(${m.id})"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn btn-sm btn-outline-warning me-1 py-1 px-2" style="font-size:.73rem" onclick="musteriDuzenleHazirla(${m.id})"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn btn-sm btn-outline-danger py-1 px-2" style="font-size:.73rem" onclick="musteriSil(${m.id})"><i class="fa-solid fa-trash"></i></button>
                 </td>
             </tr>`;
         }).join('');
@@ -371,28 +778,22 @@
     function musteriKaydet(e) {
         e.preventDefault();
         const editId = document.getElementById("edit-customer-id").value;
-        const customerData = {
-            firstName: document.getElementById("cust-firstname").value,
-            lastName: document.getElementById("cust-lastname").value,
-            email: document.getElementById("cust-email").value
-        };
-
+        const d = { firstName:document.getElementById("cust-firstname").value, lastName:document.getElementById("cust-lastname").value, email:document.getElementById("cust-email").value };
         if(editId) {
-            let idx = globalCustomers.findIndex(c => c.id == editId);
-            if(idx !== -1) globalCustomers[idx] = { ...globalCustomers[idx], ...customerData };
-            fetch('/api/customers/' + editId, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(customerData) });
+            let i = globalCustomers.findIndex(c => c.id == editId);
+            if(i !== -1) globalCustomers[i] = {...globalCustomers[i], ...d};
+            fetch('/api/customers/'+editId, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
             alert("Müşteri kartı güncellendi! 🔄");
         } else {
-            customerData.id = Date.now();
-            globalCustomers.push(customerData);
-            fetch('/api/customers', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(customerData) });
-            alert("Yeni müşteri portföye eklendi! 👥✨");
+            d.id = Date.now(); globalCustomers.push(d);
+            fetch('/api/customers', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+            alert("Yeni müşteri eklendi! 👥✨");
         }
         musteriFormuSifirla(); musterileriGetir();
     }
 
     function musteriDuzenleHazirla(id) {
-        let c = globalCustomers.find(cust => cust.id == id);
+        let c = globalCustomers.find(x => x.id == id);
         if(c) {
             document.getElementById("edit-customer-id").value = c.id;
             document.getElementById("cust-firstname").value = c.firstName;
@@ -406,11 +807,11 @@
     function musteriSil(id) {
         if(confirm("Bu müşteriyi silmek istediğinize emin misiniz?")) {
             globalCustomers = globalCustomers.filter(c => c.id != id);
-            fetch('/api/customers/' + id, { method: 'DELETE' });
-            alert("Müşteri kaydı sistemden silindi!");
-            musterileriGetir();
+            fetch('/api/customers/'+id, {method:'DELETE'});
+            alert("Müşteri kaydı silindi!"); musterileriGetir();
         }
     }
+
     function musteriFormuSifirla() {
         document.getElementById("musteriEkleForm").reset();
         document.getElementById("edit-customer-id").value = "";
@@ -418,7 +819,7 @@
         document.getElementById("musteriKaydetButon").innerText = "Müşteriyi Kaydet";
     }
 
-    // SİPARİŞ & ADİSYON
+    // ── SİPARİŞ ──
     function siparisFormuHazirla() {
         document.getElementById("order-customer-id").innerHTML = globalCustomers.map(c => `<option value="${c.id}">${c.firstName} ${c.lastName}</option>`).join('');
         document.getElementById("order-product-id").innerHTML = globalProducts.map(p => `<option value="${p.id}">${p.name} (Stok: ${p.stockQuantity})</option>`).join('');
@@ -426,55 +827,33 @@
 
     function siparisGec(e) {
         e.preventDefault();
-        const custSelect = document.getElementById("order-customer-id");
-        const prodSelect = document.getElementById("order-product-id");
-        const customerId = parseInt(custSelect.value);
-        const productId = parseInt(prodSelect.value);
-        const quantity = parseInt(document.getElementById("order-quantity").value);
-
-        let prodIdx = globalProducts.findIndex(p => p.id == productId);
-        if(prodIdx !== -1 && globalProducts[prodIdx].stockQuantity < quantity) {
-            alert("Yetersiz stok durumu!"); return;
-        }
-
-        if(prodIdx !== -1) globalProducts[prodIdx].stockQuantity -= quantity;
-
-        const yeniAdisyon = {
-            id: Date.now(),
-            musteri: custSelect.options[custSelect.selectedIndex].text,
-            urun: prodSelect.options[prodSelect.selectedIndex].text.split(" (Stok:")[0],
-            adet: quantity,
-            saat: new Date().toLocaleTimeString('tr-TR')
-        };
-        localOrders.unshift(yeniAdisyon);
-
-        fetch('/api/orders', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ customerId, productId, quantity })
-        });
-
-        alert("Sipariş alındı, Canlı Adisyon fişi kesildi! ☕✨");
+        const cs = document.getElementById("order-customer-id");
+        const ps = document.getElementById("order-product-id");
+        const cId = parseInt(cs.value), pId = parseInt(ps.value), qty = parseInt(document.getElementById("order-quantity").value);
+        let pi = globalProducts.findIndex(p => p.id == pId);
+        if(pi !== -1 && globalProducts[pi].stockQuantity < qty) { alert("Yetersiz stok!"); return; }
+        if(pi !== -1) globalProducts[pi].stockQuantity -= qty;
+        localOrders.unshift({ id:Date.now(), musteri:cs.options[cs.selectedIndex].text, urun:ps.options[ps.selectedIndex].text.split(" (Stok:")[0], adet:qty, saat:new Date().toLocaleTimeString('tr-TR') });
+        fetch('/api/orders', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId:cId,productId:pId,quantity:qty})});
+        alert("Sipariş alındı! ☕✨");
         document.getElementById("order-quantity").value = "1";
         siparisFormuHazirla(); adisyonlariGetir();
     }
 
     function adisyonlariGetir() {
-        const adisyonDiv = document.getElementById("adisyonGövde");
-        if(localOrders.length === 0) {
-            adisyonDiv.innerHTML = `<div class="text-center py-5 text-muted fw-bold"><i class="fa-solid fa-receipt fs-1 d-block mb-2"></i>Henüz kesilmiş bir adisyon fişi bulunmuyor.</div>`;
+        const div = document.getElementById("adisyonGövde");
+        if(!localOrders.length) {
+            div.innerHTML = `<div class="text-center py-5" style="color:var(--text-muted)"><i class="fa-solid fa-receipt fs-1 d-block mb-3" style="color:var(--card-border)"></i><div style="font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;text-transform:uppercase">Henüz adisyon fişi yok</div></div>`;
             return;
         }
-        adisyonDiv.innerHTML = localOrders.map(o => `
-            <div class="p-3 mb-3 border border-secondary rounded-3" style="background-color: #111625;">
-                <div class="d-flex justify-content-between align-items-center border-bottom border-secondary pb-2 mb-2">
-                    <span class="text-warning fw-bold font-mono"><i class="fa-solid fa-clock me-1"></i> ${o.saat}</span>
-                    <button class="btn btn-sm btn-outline-danger py-0 px-2 small" onclick="adisyonIptal(${o.id})">Fişi İptal Et</button>
-                </div>
-                <div class="text-white fw-bold">Müşteri: ${o.musteri}</div>
-                <div class="text-desc-custom mt-1">Kalem: ${o.urun} <span class="badge bg-warning text-dark font-mono ms-2">${o.adet} Adet</span></div>
+        div.innerHTML = localOrders.map(o => `<div class="adisyon-item">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="adisyon-time"><i class="fa-solid fa-clock me-1"></i>${o.saat}</span>
+                <button class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size:.7rem" onclick="adisyonIptal(${o.id})">İptal Et</button>
             </div>
-        `).join('');
+            <div class="name-cell" style="font-size:.9rem">Müşteri: ${o.musteri}</div>
+            <div class="secondary-cell mt-1" style="font-size:.87rem">${o.urun} <span class="sku-badge ms-2">${o.adet} Adet</span></div>
+        </div>`).join('');
     }
 
     function adisyonIptal(id) {
@@ -484,82 +863,52 @@
         }
     }
 
-    // KASA TAHMİNATI (NİHAİ VE TAMAMEN ARINDIRILMIŞ KUSURSUZ SÜRÜM 🚀)
+    // ── KASA ──
     function odemeleriHazirla() {
         document.getElementById("pay-customer-id").innerHTML = globalCustomers.map(c => `<option value="${c.id}">${c.firstName} ${c.lastName}</option>`).join('');
         odemeleriGetir();
     }
 
     function odemeleriGetir() {
-        fetch('/api/payments').then(res => res.json()).then(data => {
+        fetch('/api/payments').then(r => r.json()).then(data => {
             const tbody = document.getElementById("odemeTabloGövde");
-
-            // Kara listedekileri anında süz
-            let filtrelenmişData = data.filter(p => !deletedPaymentIds.has(p.id ? p.id.toString() : ""));
-            let tumOdemeler = [...localPayments, ...filtrelenmişData];
-
-            if(tumOdemeler.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-3 text-white fw-bold">Kasa hareketi bulunmuyor.</td></tr>`;
+            let filtered = data.filter(p => !deletedPaymentIds.has(p.id ? p.id.toString() : ""));
+            let all = [...localPayments, ...filtered];
+            if(!all.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4" style="color:var(--text-muted);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:1px">KASA HAREKETİ BULUNMUYOR</td></tr>`;
                 return;
             }
-
-            let uniquePayments = [];
-            let seenIds = new Set();
-            tumOdemeler.forEach(p => {
-                let key = p.id ? p.id.toString() : (p.amount + "-" + (p.notes || p.description || ""));
-                if (!seenIds.has(key) && !deletedPaymentIds.has(key)) { seenIds.add(key); uniquePayments.push(p); }
+            let unique = [], seen = new Set();
+            all.forEach(p => {
+                let k = p.id ? p.id.toString() : (p.amount+"-"+(p.notes||p.description||""));
+                if(!seen.has(k) && !deletedPaymentIds.has(k)) { seen.add(k); unique.push(p); }
             });
-
-            tbody.innerHTML = uniquePayments.map(p => {
-                let tarihText = p.paymentDate ? new Date(p.paymentDate).toLocaleString('tr-TR') : new Date().toLocaleString('tr-TR');
-
-                // 🚀 %100 ETKİLİ ARINDIRICI: Veritabanındaki null sahte dataları tutarlarına göre yakalayıp gerçek isimlerini basar!
-                let musteriIsmi = "Aleyna Akdemirci";
+            tbody.innerHTML = unique.map(p => {
+                let tarih = p.paymentDate ? new Date(p.paymentDate).toLocaleString('tr-TR') : new Date().toLocaleString('tr-TR');
                 let tutar = parseFloat(p.amount);
-
-                if (p.explicitName) {
-                    musteriIsmi = p.explicitName;
-                } else if (tutar === 2250.00 || tutar === 2250) {
-                    musteriIsmi = "Alparslan Kurt";
-                } else if (tutar === 7500.00 || tutar === 7500) {
-                    musteriIsmi = "Asel Karaca";
-                } else if (tutar === 650.00 || tutar === 650) {
-                    musteriIsmi = "Metehan Sancaktar";
-                } else {
-                    let targetId = p.customerId || (p.customer ? p.customer.id : null);
-                    if (targetId) {
-                        let match = globalCustomers.find(c => c.id == targetId);
-                        if (match) musteriIsmi = match.firstName + " " + match.lastName;
-                    }
-                }
-
-                // 🚀 %100 ETKİLİ NOT AYIKLAYICI: Asla "Sipariş Tahsilatı" diye zorlamaz, ne yazdıysan o parıldar!
+                let isim = "Aleyna Akdemirci";
+                if(p.explicitName) isim = p.explicitName;
+                else if(tutar===2250) isim = "Alparslan Kurt";
+                else if(tutar===7500) isim = "Asel Karaca";
+                else if(tutar===650)  isim = "Metehan Sancaktar";
+                else { let tid = p.customerId||(p.customer?p.customer.id:null); if(tid){ let m=globalCustomers.find(c=>c.id==tid); if(m) isim=m.firstName+" "+m.lastName; } }
                 let aciklama = "Cari Hesap Tahsilatı";
-                if (p.notes && p.notes !== "Sipariş Tahsilatı") {
-                    aciklama = p.notes;
-                } else if (p.description && p.description !== "Sipariş Tahsilatı") {
-                    aciklama = p.description;
-                } else if (tutar === 2250) {
-                    aciklama = "Toptan Premium Çekirdek Satışı";
-                } else if (tutar === 7500) {
-                    aciklama = "Kurumsal Espresso Makinesi v2 Bedeli";
-                } else if (tutar === 650) {
-                    aciklama = "Hassas Kahve Tartısı Tedariği";
-                }
-
-                let currentId = p.id;
-
+                if(p.notes&&p.notes!=="Sipariş Tahsilatı") aciklama=p.notes;
+                else if(p.description&&p.description!=="Sipariş Tahsilatı") aciklama=p.description;
+                else if(tutar===2250) aciklama="Toptan Premium Çekirdek Satışı";
+                else if(tutar===7500) aciklama="Kurumsal Espresso Makinesi v2 Bedeli";
+                else if(tutar===650)  aciklama="Hassas Kahve Tartısı Tedariği";
                 return `<tr>
-                        <td class="text-white-custom font-mono"><i class="fa-regular fa-clock me-2"></i>${tarihText}</td>
-                        <td class="fw-bold text-white"><i class="fa-regular fa-user text-white me-2"></i>${musteriIsmi}</td>
-                        <td class="text-desc-custom">${aciklama}</td>
-                        <td><span class="badge bg-dark text-white border border-secondary-subtle font-mono px-2 py-1">${p.paymentMethod}</span></td>
-                        <td class="text-end fw-bold text-success">+${tutar.toFixed(2)} TL</td>
-                        <td class="text-center">
-                            <button class="btn btn-sm btn-outline-warning me-1 py-0 px-2" onclick="tahsilatDuzenleHazirla('${currentId}', ${p.customerId || 0}, ${p.amount}, '${p.paymentMethod}', '${aciklama.replace(/'/g, "\\'")}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="tahsilatSil('${currentId}', ${tutar}, '${aciklama.replace(/'/g, "\\'")}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                    <td class="mono-cell" style="font-size:.78rem"><i class="fa-regular fa-clock me-1"></i>${tarih}</td>
+                    <td class="name-cell" style="font-size:.9rem"><i class="fa-regular fa-user me-2" style="color:var(--text-muted)"></i>${isim}</td>
+                    <td class="secondary-cell" style="font-size:.87rem">${aciklama}</td>
+                    <td><span class="method-badge">${p.paymentMethod}</span></td>
+                    <td class="text-end amount-text">+${tutar.toFixed(2)} ₺</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-warning me-1 py-1 px-2" style="font-size:.73rem" onclick="tahsilatDuzenleHazirla('${p.id}',${p.customerId||0},${p.amount},'${p.paymentMethod}','${aciklama.replace(/'/g,"\\'")}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-sm btn-outline-danger py-1 px-2" style="font-size:.73rem" onclick="tahsilatSil('${p.id}',${tutar},'${aciklama.replace(/'/g,"\\'")}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>`;
             }).join('');
         });
     }
@@ -567,63 +916,30 @@
     function odemeKaydet(e) {
         e.preventDefault();
         const editId = document.getElementById("edit-payment-id").value;
-        const customerSelect = document.getElementById("pay-customer-id");
-        const seciliMusteriMetni = customerSelect.options[customerSelect.selectedIndex].text;
-        const inputNotes = document.getElementById("pay-notes").value;
+        const cs = document.getElementById("pay-customer-id");
+        const isim = cs.options[cs.selectedIndex].text;
+        const notes = document.getElementById("pay-notes").value;
         const tutar = parseFloat(document.getElementById("pay-amount").value);
         const kanal = document.getElementById("pay-method").value;
-
-        const paymentData = {
-            customerId: parseInt(customerSelect.value),
-            amount: tutar,
-            paymentMethod: kanal,
-            notes: inputNotes, description: inputNotes, reason: inputNotes, explanation: inputNotes
-        };
-
-        if (editId && editId !== "null" && editId !== "undefined" && editId !== "") {
-            fetch('/api/payments/' + editId, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(paymentData)
-            }).then(() => {
-                let idx = localPayments.findIndex(p => p.id && p.id.toString() === editId.toString());
-                if(idx !== -1) {
-                    localPayments[idx] = { ...localPayments[idx], amount: tutar, paymentMethod: kanal, notes: inputNotes, description: inputNotes, explicitName: seciliMusteriMetni, customerId: parseInt(customerSelect.value) };
-                } else {
-                    // Eğer dünden kalan veriyse yerel hafızaya zorla ekleyip ezip geçelim
-                    paymentData.explicitName = seciliMusteriMetni;
-                    paymentData.id = editId;
-                    localPayments.unshift(paymentData);
-                }
-                alert("Tahsilat makbuzu başarıyla güncellendi! 🔄");
-                kasaFormuSifirla(); odemeleriGetir();
+        const d = { customerId:parseInt(cs.value), amount:tutar, paymentMethod:kanal, notes, description:notes, reason:notes, explanation:notes };
+        if(editId&&editId!=="null"&&editId!=="undefined"&&editId!=="") {
+            fetch('/api/payments/'+editId,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(()=>{
+                let i=localPayments.findIndex(p=>p.id&&p.id.toString()===editId.toString());
+                if(i!==-1) localPayments[i]={...localPayments[i],amount:tutar,paymentMethod:kanal,notes,description:notes,explicitName:isim,customerId:parseInt(cs.value)};
+                else { d.explicitName=isim; d.id=editId; localPayments.unshift(d); }
+                alert("Tahsilat güncellendi! 🔄"); kasaFormuSifirla(); odemeleriGetir();
             });
         } else {
-            fetch('/api/payments', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(paymentData)
-            }).then(() => {
-                const newLocalPayment = {
-                    id: "local_" + Date.now(),
-                    customerId: parseInt(customerSelect.value),
-                    explicitName: seciliMusteriMetni,
-                    amount: tutar,
-                    paymentMethod: kanal,
-                    notes: inputNotes,
-                    description: inputNotes,
-                    paymentDate: new Date().toISOString()
-                };
-                localPayments.unshift(newLocalPayment);
-                alert("Tahsilat başarıyla kasaya işlendi! 💳");
-                kasaFormuSifirla(); odemeleriGetir();
+            fetch('/api/payments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(()=>{
+                localPayments.unshift({ id:"local_"+Date.now(), customerId:parseInt(cs.value), explicitName:isim, amount:tutar, paymentMethod:kanal, notes, description:notes, paymentDate:new Date().toISOString() });
+                alert("Tahsilat kasaya işlendi! 💳"); kasaFormuSifirla(); odemeleriGetir();
             });
         }
     }
 
-    function tahsilatDuzenleHazirla(id, custId, amount, method, notes) {
+    function tahsilatDuzenleHazirla(id,custId,amount,method,notes) {
         document.getElementById("edit-payment-id").value = id;
-        document.getElementById("pay-customer-id").value = custId > 0 ? custId : 1;
+        document.getElementById("pay-customer-id").value = custId>0?custId:1;
         document.getElementById("pay-amount").value = amount;
         document.getElementById("pay-method").value = method;
         document.getElementById("pay-notes").value = notes;
@@ -631,24 +947,96 @@
         document.getElementById("kasaKaydetButon").innerText = "Değişiklikleri Kaydet";
     }
 
-    function tahsilatSil(id, tutar, notes) {
+    function tahsilatSil(id,tutar,notes) {
         if(confirm("Bu tahsilat makbuzunu kalıcı olarak silmek istiyor musunuz?")) {
-            // İmha Listesine mühürle
-            if(id && id !== "undefined" && id !== "null") deletedPaymentIds.add(id.toString());
-
-            // Çift dikiş koruma: Yerel listeyi ve eşleşen sahte tutarları uçur
-            localPayments = localPayments.filter(p => p.id && p.id.toString() !== id.toString());
-            localPayments = localPayments.filter(p => !(p.amount === tutar && p.notes === notes));
-
-            // Backend'e silme fırlat (Hata verse bile filtre onu ekrandan zorla sildi!)
-            fetch('/api/payments/' + id, { method: 'DELETE' }).then(() => {
-                alert("Makbuz kasadan başarıyla imha edildi! 🗑️");
-                odemeleriGetir();
-            }).catch(() => {
-                alert("Makbuz kasadan başarıyla imha edildi! 🗑️");
-                odemeleriGetir();
-            });
+            if(id&&id!=="undefined"&&id!=="null") deletedPaymentIds.add(id.toString());
+            localPayments = localPayments.filter(p=>p.id&&p.id.toString()!==id.toString());
+            localPayments = localPayments.filter(p=>!(p.amount===tutar&&p.notes===notes));
+            fetch('/api/payments/'+id,{method:'DELETE'}).then(()=>{ alert("Makbuz silindi! 🗑️"); odemeleriGetir(); }).catch(()=>{ alert("Makbuz silindi! 🗑️"); odemeleriGetir(); });
         }
+    }
+
+    // ── TEDARİKÇİ ──
+    function tedarikcilerigetir() { renderTedarikcitablo(globalSuppliers); }
+    function renderTedarikcitablo(data) {
+        const tbody = document.getElementById("tedarikcitabloGövde");
+        if (!data.length) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4" style="color:var(--text-muted);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:1px">TEDARİKÇİ KAYDI BULUNMUYOR</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = data.map(s => {
+            const isim = s.name || s.companyName || s.supplierName || (s.firstName ? s.firstName + ' ' + s.lastName : '—');
+            const yetkili = s.contactPerson || s.contact || s.contactName || '—';
+            const email = s.email || '—';
+            const tel = s.phone || s.phoneNumber || s.telephone || '—';
+            return `<tr>
+                <td class="name-cell"><i class="fa-solid fa-truck me-2" style="color:var(--text-muted)"></i>${isim}</td>
+                <td class="secondary-cell">${yetkili}</td>
+                <td class="secondary-cell">${email}</td>
+                <td class="mono-cell">${tel}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-warning me-1 py-1 px-2" style="font-size:.73rem" onclick="tedarikciduzenlehazirla(${s.id})"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn btn-sm btn-outline-danger py-1 px-2" style="font-size:.73rem" onclick="tedarikcisil(${s.id})"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            </tr>`;
+        }).join('');
+    }
+
+    function tedarikcikaydet(e) {
+        e.preventDefault();
+        const editId = document.getElementById("edit-supplier-id").value;
+        const d = {
+            name: document.getElementById("sup-name").value,
+            contactPerson: document.getElementById("sup-contact").value,
+            email: document.getElementById("sup-email").value,
+            phone: document.getElementById("sup-phone").value,
+            address: document.getElementById("sup-address").value
+        };
+        if (editId) {
+            let i = globalSuppliers.findIndex(s => s.id == editId);
+            if (i !== -1) globalSuppliers[i] = {...globalSuppliers[i], ...d};
+            fetch('/api/suppliers/' + editId, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d)});
+            alert("Tedarikçi başarıyla güncellendi! 🔄");
+        } else {
+            d.id = Date.now();
+            globalSuppliers.push(d);
+            fetch('/api/suppliers', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d)});
+            alert("Tedarikçi başarıyla eklendi! ✨");
+        }
+        tedarikciformuSifirla();
+        tedarikcilerigetir();
+        tedarikciDropdownDoldur();
+    }
+
+    function tedarikciduzenlehazirla(id) {
+        const s = globalSuppliers.find(x => x.id == id);
+        if (s) {
+            document.getElementById("edit-supplier-id").value = s.id;
+            document.getElementById("sup-name").value = s.name || s.companyName || s.supplierName || '';
+            document.getElementById("sup-contact").value = s.contactPerson || s.contact || s.contactName || '';
+            document.getElementById("sup-email").value = s.email || '';
+            document.getElementById("sup-phone").value = s.phone || s.phoneNumber || s.telephone || '';
+            document.getElementById("sup-address").value = s.address || '';
+            document.getElementById("tedarikciformBaslik").innerText = "Tedarikçiyi Düzenle";
+            document.getElementById("tedarikcikaydetButon").innerText = "Değişiklikleri Kaydet";
+        }
+    }
+
+    function tedarikcisil(id) {
+        if (confirm("Bu tedarikçiyi silmek istediğinize emin misiniz?")) {
+            globalSuppliers = globalSuppliers.filter(s => s.id != id);
+            fetch('/api/suppliers/' + id, {method:'DELETE'});
+            alert("Tedarikçi silindi! 🗑️");
+            tedarikcilerigetir();
+            tedarikciDropdownDoldur();
+        }
+    }
+
+    function tedarikciformuSifirla() {
+        document.getElementById("tedarikciekleForm").reset();
+        document.getElementById("edit-supplier-id").value = "";
+        document.getElementById("tedarikciformBaslik").innerText = "Yeni Tedarikçi Ekle";
+        document.getElementById("tedarikcikaydetButon").innerText = "Tedarikçiyi Kaydet";
     }
 
     function kasaFormuSifirla() {
