@@ -1,6 +1,6 @@
 package com.project.stokyonetim.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference; // Sihirli kütüphanemizi ekledik!
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -42,6 +42,7 @@ public class Product {
     @ManyToOne
     // Veri tabaninda baglanti kurulacak yabanci anahtar (Foreign Key) kolonunun adi
     @JoinColumn(name = "supplier_id")
+    @JsonBackReference // 🚀 Postman'deki o iç içe geçen sonsuz döngüyü kıran sihirli dokunuş!
     private Supplier supplier;
 
     // Bos constructor

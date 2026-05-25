@@ -1,5 +1,6 @@
 package com.project.stokyonetim.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference; // Sihirli kütüphanemizi buraya da ekledik!
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class Supplier {
 
     // Bir tedarikcinin depomuza getirdigi bircok urun olabilir iliskisi
     @OneToMany(mappedBy = "supplier")
+    @JsonManagedReference // 🚀 Döngüyü yöneten ana taraf burası dedik, pürüzleri temizledik!
     private List<Product> products;
 
     // Bos constructor
