@@ -20,14 +20,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    // Veri tabanindan gelen urun listesini DTO listesine donusturen profesyonel metot
     public List<ProductResponseDTO> getAllProductsDTO() {
         return productRepository.findAll().stream()
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    // Ham urun verisini alip sadece ihtiyacimiz olan alanlari kalkan arkasina alan yardimci metot
     private ProductResponseDTO convertToResponseDTO(Product product) {
         ProductResponseDTO dto = new ProductResponseDTO();
         dto.setId(product.getId());
@@ -38,10 +36,15 @@ public class ProductService {
         dto.setStockQuantity(product.getStockQuantity());
         dto.setPrice(product.getPrice());
 
-        // Eger urunun bir tedarikcisi varsa sadece sirket adini DTO'ya setle
         if (product.getSupplier() != null) {
-            dto.setSupplierCompanyName(product.getSupplier().getCompanyName());
+            dto.setSupplierCompanyName(product.getSupplier().getName());  // DEĞİŞTİ
+            dto.setSupplierId(product.getSupplier().getId());             // YENİ
         }
         return dto;
+    }
+
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 }

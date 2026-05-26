@@ -2,7 +2,6 @@ package com.project.stokyonetim.dto;
 
 import java.math.BigDecimal;
 
-// Postman ekranina urun detaylarini basarken kullanacagimiz temiz yuzlu sinif
 public class ProductResponseDTO {
 
     private Long id;
@@ -12,14 +11,11 @@ public class ProductResponseDTO {
     private String model;
     private int stockQuantity;
     private BigDecimal price;
-
-    // Veri tabanindaki karmasik Supplier tablosu yerine sadece sirket adini gosterecegiz
     private String supplierCompanyName;
+    private Long supplierId;        // YENİ EKLENEN
 
-    // Bos constructor
     public ProductResponseDTO() {}
 
-    // Getter ve Setter metotlari
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getSku() { return sku; }
@@ -36,4 +32,6 @@ public class ProductResponseDTO {
     public void setPrice(BigDecimal price) { this.price = price; }
     public String getSupplierCompanyName() { return supplierCompanyName; }
     public void setSupplierCompanyName(String supplierCompanyName) { this.supplierCompanyName = supplierCompanyName; }
+    public Long getSupplierId() { return supplierId; }          // YENİ EKLENEN
+    public void setSupplierId(Long supplierId) { this.supplierId = supplierId; }  // YENİ EKLENEN
 }

@@ -33,30 +33,38 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // 🚀 KESİN ÇÖZÜM: Transactional yok, bodoslama zorlama yok, her şey bağımsız bloklarda!
 
         // ==========================================
-        // 🏭 1. ADIM: TEDARİKÇİLER (SUPPLIERS)
+        // 🏭 1. ADIM: TEDARİKÇİLER
         // ==========================================
         Supplier s1 = new Supplier();
-        s1.setCompanyName("Grolet Pastacılık Ekipmanları A.Ş.");
-        s1.setContactEmail("info@groletpastacilik.com");
+        s1.setName("Grolet Pastacılık Ekipmanları A.Ş.");
+        s1.setContactPerson("Cédric Grolet");                  // YENİ
+        s1.setEmail("info@groletpastacilik.com");
+        s1.setPhone("0212 444 55 66");                         // YENİ
+        s1.setAddress("Kapalıçarşı Cd. No:12 İstanbul");       // YENİ
         try { s1 = supplierRepository.save(s1); } catch (Exception e) {}
 
         Supplier s2 = new Supplier();
-        s2.setCompanyName("Kolombiya Lojistik & Kahve Çiftliği");
-        s2.setContactEmail("supply@colombiacoffee.com");
+        s2.setName("Kolombiya Lojistik & Kahve Çiftliği");
+        s2.setContactPerson("Carlos Mendez");                  // YENİ
+        s2.setEmail("supply@colombiacoffee.com");
+        s2.setPhone("0312 555 66 77");                         // YENİ
+        s2.setAddress("Atatürk Blv. No:45 Ankara");            // YENİ
         try { s2 = supplierRepository.save(s2); } catch (Exception e) {}
 
         Supplier s3 = new Supplier();
-        s3.setCompanyName("Sancaktar Kahve Çekirdeği İthalat A.Ş.");
-        s3.setContactEmail("sancaktar@kahveithalat.com");
+        s3.setName("Sancaktar Kahve Çekirdeği İthalat A.Ş.");
+        s3.setContactPerson("Metehan Sancaktar");              // YENİ
+        s3.setEmail("sancaktar@kahveithalat.com");
+        s3.setPhone("0232 777 88 99");                         // YENİ
+        s3.setAddress("Alsancak Mh. No:7 İzmir");              // YENİ
         try { s3 = supplierRepository.save(s3); } catch (Exception e) {}
 
         Supplier fallbackSupplier = supplierRepository.findAll().stream().findFirst().orElse(s1);
 
         // ==========================================
-        // ☕ 2. ADIM: ÜRÜN KATALOĞU (PRODUCTS)
+        // ☕ 2. ADIM: ÜRÜN KATALOĞU
         // ==========================================
         Product p1 = new Product();
         p1.setName("Gourmet Arabica Kahve Çekirdeği (1 KG)");
@@ -99,19 +107,21 @@ public class DataInitializer implements CommandLineRunner {
         try { productRepository.save(p4); } catch (Exception e) {}
 
         // ==========================================
-        // 👥 3. ADIM: MÜŞTERI PORTFÖYÜ (GENDER KISITLAMASI ÇÖZÜLDÜ 🚀)
+        // 👥 3. ADIM: MÜŞTERİLER
         // ==========================================
         Customer c1 = new Customer();
         c1.setFirstName("Alparslan");
         c1.setLastName("Kurt");
         c1.setEmail("alparslankurt@gmail.com");
-        try { c1.getClass().getMethod("setGender", String.class).invoke(c1, "MALE"); } catch(Exception e){} // Eğer sınıfında varsa dinamik setle, yoksa hata verme!
+        c1.setPhoneNumber("0532 111 22 33");                   // YENİ
+        try { c1.getClass().getMethod("setGender", String.class).invoke(c1, "MALE"); } catch(Exception e){}
         try { c1 = customerRepository.save(c1); } catch (Exception e) { c1 = customerRepository.findByEmail("alparslankurt@gmail.com").orElse(c1); }
 
         Customer c2 = new Customer();
         c2.setFirstName("Asel");
         c2.setLastName("Karaca");
         c2.setEmail("aselkaraca@gmail.com");
+        c2.setPhoneNumber("0544 333 44 55");                   // YENİ
         try { c2.getClass().getMethod("setGender", String.class).invoke(c2, "FEMALE"); } catch(Exception e){}
         try { c2 = customerRepository.save(c2); } catch (Exception e) { c2 = customerRepository.findByEmail("aselkaraca@gmail.com").orElse(c2); }
 
@@ -119,11 +129,12 @@ public class DataInitializer implements CommandLineRunner {
         c3.setFirstName("Metehan");
         c3.setLastName("Sancaktar");
         c3.setEmail("metehansancaktar@gmail.com");
+        c3.setPhoneNumber("0555 666 77 88");                   // YENİ
         try { c3.getClass().getMethod("setGender", String.class).invoke(c3, "MALE"); } catch(Exception e){}
         try { c3 = customerRepository.save(c3); } catch (Exception e) { c3 = customerRepository.findByEmail("metehansancaktar@gmail.com").orElse(c3); }
 
         // ==========================================
-        // 💰 4. ADIM: KASA GİRİŞLERİ (PAYMENTS)
+        // 💰 4. ADIM: KASA GİRİŞLERİ
         // ==========================================
         if (paymentRepository.count() == 0 && c1.getId() != null) {
             Payment pay1 = new Payment();

@@ -9,6 +9,13 @@ Bu proje, bir kahve evi ve pastane zincirinin stok, müşteri, sipariş ve finan
 - **Bootstrap 5 & FontAwesome** (Arayüz)
 - **Maven** (Bağımlılık Yönetimi)
 
+## Özellikler
+- 📦 Envanter yönetimi (ürün ekleme, düzenleme, silme, tedarikçi atama)
+- 🚚 Tedarikçi yönetimi (yetkili kişi, e-posta, telefon, adres)
+- 👥 Müşteri portföyü (telefon numarası desteği)
+- 🧾 Sipariş merkezi (adisyon fişleri, sayfa yenilemede kalıcı)
+- 💳 Finansal tahsilat akışı (kasa geçmişi)
+
 ## Mimari
 Proje, katmanlı mimari yapısına uygun olarak düzenlenmiştir:
 - `entity`: Veritabanı tabloları.
@@ -23,4 +30,4 @@ Proje, katmanlı mimari yapısına uygun olarak düzenlenmiştir:
 2. `application.properties` dosyasında veritabanı ayarlarınızı güncelleyin.
 3. Projeyi IntelliJ IDEA ile açın ve Maven bağımlılıklarının yüklenmesini bekleyin.
 4. Uygulamayı `StokYonetimApplication` sınıfından çalıştırın.
-5. `http://localhost:8080` üzerinden sisteme erişin.
+5. `http://localhost:8082` üzerinden sisteme erişin.
