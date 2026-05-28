@@ -5,9 +5,7 @@ import com.project.stokyonetim.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-// Bu sinifin dis dunyaya acilan bir API kapisi (REST Controller) oldugunu bildirir
 @RestController
-// Postman'den bu kapıya ulasmak icin kullanacagimiz ana istek adresini belirler
 @RequestMapping("/api/customers")
 public class CustomerController {
 
@@ -17,16 +15,27 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    // Postman'den POST istegiyle gelen musteri verisini servise gonderip kaydeder
+    // 1. Yeni Müşteri Kaydı (POST)
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.saveCustomer(customer);
     }
 
-    // Postman'den GET istegi atildiginda tum musterileri ekrana listeler
+    // 2. Müşterileri Listeleme (GET)
     @GetMapping
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
+    // 3. Müşteri Güncelleme (PUT) - İD'ye göre veriyi günceller
+    @PutMapping("/{id}")
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customerDetails) {
+        return customerService.updateCustomer(id, customerDetails);
+    }
+
+    // 4. Müşteri Silme (DELETE) - İD'ye göre veriyi siler
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable Long id) {
+        customerService.deleteById(id);
+    }
 }
